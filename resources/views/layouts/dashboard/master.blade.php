@@ -1,0 +1,5 @@
+@include('layouts/dashboard/header')
+@include('layouts/dashboard/navbar')
+@include('layouts/dashboard/sidebar')
+@include('layouts/dashboard/content')
+@include('layouts/dashboard/footer')
