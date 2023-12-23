@@ -17,8 +17,7 @@
                         </div>
                         <div class="collection-product-container">
                             <div class="row">
-
-                                @foreach ($post as $item)
+                                @foreach ($ayam as $item)
                                     <div class="col-lg-4 col-md-6 col-6" data-aos="fade-up" data-aos-duration="700">
                                         <div class="product-card">
                                             <div class="product-card-img">
@@ -59,10 +58,10 @@
 
                                                 <h3 class="product-card-title">
                                                     <a
-                                                        href="{{ url('/detail/' . $item->id . '/show') }}">{{ $item->jenis_ayam_id }}</a>
+                                                        href="{{ route('index.koleksi.show', $item->id) }}">{{ $item->jenis->nama }}</a>
                                                 </h3>
                                                 <div class="product-card-price">
-                                                    <span class="card-price-regular">{{ $item->jenis->nama }}</span>
+                                                    <span class="card-price-regular">{{ $item->kategori->nama }}</span>
                                                     <span class="card-price-regular">Kode :
                                                         {{ $item->kode }}</span><br>
                                                     <span
@@ -76,7 +75,7 @@
                         </div>
 
                         <!-- PAGINATION -->
-                        {{ $post->links('vendor.pagination.pagination_view') }}
+                        {{ $ayam->links('vendor.pagination.pagination_view') }}
                         <!-- END PAGINATION -->
 
                     </div>

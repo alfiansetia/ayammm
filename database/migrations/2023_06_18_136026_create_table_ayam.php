@@ -11,17 +11,17 @@ return new class extends Migration
     {
         Schema::create('ayam', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_ayam_id');
-            $table->string('kode_ayam');
+            $table->unsignedBigInteger('jenis_ayam_id');
+            $table->unsignedBigInteger('kategori_id');
+            $table->string('kode');
             $table->string('berat');
             $table->string('status');
             $table->decimal('usia');
-            $table->string('kategori_id');
-            $table->string('deskripsi');
-            $table->text('cover');
-
-
+            $table->text('deskripsi');
+            $table->string('cover');
             $table->timestamps();
+            $table->foreign('jenis_ayam_id')->references('id')->on('jenis_ayam')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('kategori_id')->references('id')->on('kategori')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

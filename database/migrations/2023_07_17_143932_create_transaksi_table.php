@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->dateTime('tanggal')->useCurrent();
+            $table->string('nomor');
             $table->string('nama');
-            $table->text('alamat');
-            $table->integer('no_telp');
-            $table->string('status');
-            $table->string('h_jual');
-            $table->string('kode_ayam');
-            $table->string('foto');
+            $table->string('alamat');
+            $table->string('telp');
+            $table->enum('status', ['pending', 'success', 'cancel'])->default('pending');
+            $table->integer('total')->default(0);
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

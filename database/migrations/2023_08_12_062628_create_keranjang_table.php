@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('keranjang', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_ayam');
-            $table->integer('qty');
-
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('ayam_id');
+            $table->integer('qty')->default(1);
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('ayam_id')->references('id')->on('ayam')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

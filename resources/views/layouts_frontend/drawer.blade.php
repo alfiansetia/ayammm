@@ -1,7 +1,7 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="drawer-cart">
     <div class="offcanvas-header border-btm-black">
         @auth
-            <h5 class="cart-drawer-heading text_16"> {{ Auth::user()->name }}</h5>
+            <h5 class="cart-drawer-heading text_16"> {{ $user->name }}</h5>
         @endauth
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
@@ -12,14 +12,14 @@
                 <!-- minicart item -->
 
                 @auth
-                    @foreach ($query as $data)
+                    @foreach ($user->keranjang as $data)
                         <div class="minicart-item d-flex">
                             <div class="mini-img-wrapper">
-                                <img class="mini-img" src="cover/{{ $data->ayam->cover }}" alt="img">
+                                <img class="mini-img" src="{{ $data->ayam->cover }}" alt="img">
                             </div>
                             <div class="product-info">
-                                <h2 class="product-title"><a href="">{{ $data->ayam->jenis_ayam_id }}</a></h2>
-                                <p class="product-vendor">{{ $data->ayam->kode_ayam }}</p>
+                                <h2 class="product-title"><a href="">{{ $data->ayam->jenis->nama }}</a></h2>
+                                <p class="product-vendor">{{ $data->ayam->kode }}</p>
                                 <div class="misc d-flex align-items-end justify-content-between">
                                     <div class="quantity d-flex align-items-center justify-content-between">
                                         <button class="qty-btn dec-qty"><img
@@ -58,9 +58,7 @@
 
                     </h3>
                     <a href="{{ url('/keranjang/') }}" class="minicart-btn btn-secondary">Lihat Keranjang</a>
-                    @foreach ($kontak as $item)
-                        <a href="https://wa.me/{{ $item->no_telp }}" class="minicart-btn btn-primary">Pesan</a>
-                    @endforeach
+                    <a href="https://wa.me/{{ $kontak->no_telp }}" class="minicart-btn btn-primary">Pesan</a>
                 </div>
             </div>
         </div>

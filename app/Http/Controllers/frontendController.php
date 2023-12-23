@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ayam;
+use App\Models\Berita;
+use App\Models\Kategori;
+use App\Models\Keranjang;
+use App\Models\Kontak;
 use Illuminate\Support\Facades\Session;
-use App\Models\kontak;
-use App\Models\siswa;
-use App\Models\ayam;
-use App\Models\client;
-use App\Models\kategori;
-use App\Models\berita;
-use App\Models\keranjang;
-use App\Models\Post;
-use App\Models\User;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
@@ -20,71 +16,25 @@ use Illuminate\Support\Facades\DB;
 
 class frontendController extends Controller
 {
-    public function index()
-
-    {
-
-        $post = ayam::orderBy('id', 'desc')->paginate(8);
-        $postGaleri = ayam::orderBy('id', 'asc')->paginate(8);
-        $kontak = kontak::all();
-        $kategori = kategori::all();
-        $berita = berita::orderBy('id', 'desc')->paginate(3);
-        $getCartList = $this->getCartList();
-        $getCartNumber = $this->getCartNumber();
-        $data = keranjang::with(['ayam'])->orderBy('created_at')->get();
-        $users = keranjang::with(['User'])->orderBy('created_at')->get();
-        // ini query yang mas bikin
-        if (Auth::check()) {
-            $query = keranjang::where('users_id', Auth::user()->id)->get();
-            return view('welcome', compact('query', 'data', 'users', 'getCartList', 'getCartNumber', 'kontak',  'kategori', 'berita', 'post', 'postGaleri'));
-        } else {
-            return view('welcome', compact('data', 'users', 'getCartList', 'getCartNumber', 'kontak',  'kategori', 'berita', 'post', 'postGaleri'));
-        }
-    }
+    
     // show detail ayam Frontend
     public function show(string $id)
     {
-        $berita = berita::all();
-        $kontak = kontak::all();
-        $kategori = kategori::all();
-        $data_ayam_carosel = ayam::orderBy('id', 'desc')->paginate(8);
-        $post = ayam::where('id', $id)->first();
-        $getCartList = $this->getCartList();
-        $getCartNumber = $this->getCartNumber();
-        $data = keranjang::with(['ayam'])->orderBy('created_at')->get();
-        $users = keranjang::with(['User'])->orderBy('created_at')->get();
-        if (Auth::check()) {
-            $query = keranjang::where('users_id', Auth::user()->id)->get();
-            return view('detail', compact('query', 'data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'berita', 'kategori', 'post', 'data_ayam_carosel'));
-        } else {
-            return view('detail', compact('data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'berita', 'kategori', 'post', 'data_ayam_carosel'));
-        }
+        $data_ayam_carosel = Ayam::orderBy('id', 'desc')->paginate(8);
+        $post = Ayam::with('images')->where('id', $id)->first();
+        return view('detail', compact('post', 'data_ayam_carosel'));
     }
     public function tampil($id)
     {
-        $Pagination = ayam::orderBy('id', 'desc')->paginate(8);
-        $jumlah = ayam::count();
-        $kontak = kontak::all();
-        $kategori = kategori::all();
-        $berita = berita::all();
-        $post = ayam::all();
-        $post = ayam::where('kategori_id', $id)->get();
-        $getCartList = $this->getCartList();
-        $getCartNumber = $this->getCartNumber();
-        $data = keranjang::with(['ayam'])->orderBy('created_at')->get();
-        $users = keranjang::with(['User'])->orderBy('created_at')->get();
-        if (Auth::check()) {
-            $query = keranjang::where('users_id', Auth::user()->id)->get();
-            return view('tampil', compact('query', 'data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'post', 'Pagination', 'kategori', 'berita', 'jumlah'))->with('post', $post);
-        } else {
-            return view('tampil', compact('data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'post', 'Pagination', 'kategori', 'berita', 'jumlah'))->with('post', $post);
-        }
-        return view('tampil', compact('query', 'data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'post', 'Pagination', 'kategori', 'berita', 'jumlah'))->with('post', $post);
+        $Pagination = Ayam::orderBy('id', 'desc')->paginate(8);
+        $berita = Berita::all();
+        $post = Ayam::where('kategori_id', $id)->get();
+        return view('tampil', compact('Pagination', 'berita'))->with('post', $post);
     }
 
     public function detail(string $id)
     {
-        $kontak = kontak::all();
+        $kontak = Kontak::all();
         $kategori = kategori::all();
         $post = ayam::all();
         $post = ayam::where('kategori_id', $id)->get();
@@ -105,34 +55,19 @@ class frontendController extends Controller
     {
 
         $berita = berita::all();
-        $kontak = kontak::all();
-        $kategori = kategori::all();
-        $getCartList = $this->getCartList();
-        $getCartNumber = $this->getCartNumber();
         $post = ayam::orderBy('id', 'desc')->paginate(8);
-        $jumlah = ayam::count();
         $data = keranjang::with(['ayam'])->orderBy('created_at')->get();
         $users = keranjang::with(['User'])->orderBy('created_at')->get();
-        if (Auth::check()) {
-            $query = keranjang::where('users_id', Auth::user()->id)->get();
-            return view('keranjang', compact('query', 'data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'post', 'kategori', 'berita'))->with('post', $post);
-        } else {
-            return view('keranjang', compact('data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'post', 'kategori', 'berita'))->with('post', $post);
-        }
-        return view('keranjang', compact('data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'post', 'kategori', 'berita', 'jumlah'));
+        return view('keranjang', compact('data', 'users', 'post', 'berita'));
     }
+
     public function exportlaporan()
     {
-        $berita = berita::all();
         $kontak = kontak::all();
         $kategori = kategori::all();
-        $getCartList = $this->getCartList();
-        $getCartNumber = $this->getCartNumber();
         $ayam = ayam::with(['kategori'])->orderBy('created_at')->get();
-        $jumlah = ayam::count();
         $data = keranjang::with(['ayam'])->orderBy('created_at')->get();
-        $users = keranjang::with(['User'])->orderBy('created_at')->get();
-        $query = keranjang::where('users_id', Auth::user()->id)->get();
+        $query = keranjang::where('user_id', Auth::user()->id)->get();
         $pdf = PDF::loadview('laporan_pdf', [
             'data' => $data,
             'kontak' => $kontak,
@@ -147,87 +82,30 @@ class frontendController extends Controller
 
     public function koleksi()
     {
-        $berita = berita::all();
-        $kontak = kontak::all();
-        $kategori = kategori::all();
-        $getCartList = $this->getCartList();
-        $getCartNumber = $this->getCartNumber();
-        $post = ayam::orderBy('id', 'desc')->paginate(8);
-        $jumlah = ayam::count();
-        $data = keranjang::with(['ayam'])->orderBy('created_at')->get();
-        $users = keranjang::with(['User'])->orderBy('created_at')->get();
-
-        if (Auth::check()) {
-            $query = keranjang::where('users_id', Auth::user()->id)->get();
-            return view('koleksi', compact('query', 'data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'post', 'kategori', 'berita', 'jumlah'));
-        } else {
-            return view('koleksi', compact('data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'post', 'kategori', 'berita', 'jumlah'));
-        }
+        $post = Ayam::with('jenis')->orderBy('id', 'desc')->paginate(8);
+        return view('koleksi', compact('post'));
     }
 
     public function berita()
 
     {
-        $beritaPagination = berita::orderBy('id', 'desc')->paginate(3);
-        $client = client::all();
-        $post = ayam::orderBy('id', 'desc')->paginate(4);
-        $postGaleri = ayam::orderBy('id', 'asc')->paginate(8);
-        $kontak = kontak::all();
-        $kategori = kategori::all();
-        $berita = berita::orderBy('id', 'desc')->paginate(3);
-        $ayam = ayam::orderBy('id', 'desc')->paginate(4);
-        $siswa = siswa::all();
-        $getCartList = $this->getCartList();
-        $getCartNumber = $this->getCartNumber();
-        $data = keranjang::with(['ayam'])->orderBy('created_at')->get();
-        $users = keranjang::with(['User'])->orderBy('created_at')->get();
-        if (Auth::check()) {
-            $query = keranjang::where('users_id', Auth::user()->id)->get();
-            return view('berita', compact('query', 'data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'siswa', 'ayam', 'kategori', 'berita', 'client', 'post', 'postGaleri', 'beritaPagination'));
-        } else {
-            return view('berita', compact('data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'siswa', 'ayam', 'kategori', 'berita', 'client', 'post', 'postGaleri', 'beritaPagination'));
-        }
-        return view('berita', compact('data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'siswa', 'ayam', 'kategori', 'berita', 'client', 'post', 'postGaleri', 'beritaPagination'));
+        $postGaleri = Ayam::orderBy('id', 'asc')->paginate(8);
+        $berita = Berita::orderBy('id', 'desc')->paginate(3);
+        return view('berita', compact('berita', 'postGaleri'));
     }
+
     public function showBerita(string $id)
     {
-        $data = keranjang::with(['ayam'])->orderBy('created_at')->get();
-        $users = keranjang::with(['User'])->orderBy('created_at')->get();
         $beritaPagination = berita::orderBy('id', 'desc')->paginate(3);
-        $beritaAll = berita::all();
-        $berita = berita::where('id', $id)->first();
-        $berita_detail = berita::orderBy('id', 'desc')->get();
-        $kontak = kontak::all();
-        $kategori = kategori::all();
-        $getCartList = $this->getCartList();
-        $getCartNumber = $this->getCartNumber();
-        $posts = ayam::where('id', $id)->first();
-
-        if (Auth::check()) {
-            $query = keranjang::where('users_id', Auth::user()->id)->get();
-            return view('showBerita', compact('query', 'data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'berita', 'kategori', 'posts', 'beritaAll', 'berita_detail', 'beritaPagination'));
-        } else {
-            return view('showBerita', compact('data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'berita', 'kategori', 'posts', 'beritaAll', 'berita_detail', 'beritaPagination'));
-        }
-        return view('showBerita', compact('data', 'users', 'getCartList', 'getCartNumber', 'kontak', 'berita', 'kategori', 'posts', 'beritaAll', 'berita_detail', 'beritaPagination'));
+        $data = Berita::with('user')->where('id', $id)->first();
+        return view('showBerita', compact('data', 'beritaPagination'));
     }
 
     public function cartsalah($id)
     {
-        $data = Keranjang::with(['ayam'])->orderBy('created_at')->get();
-        $user = User::all();
-        $user_id = User::where('id', $id)->first();
         $Pagination = ayam::orderBy('id', 'desc')->paginate(8);
-        $jumlah = ayam::count();
-        $kontak = kontak::all();
-        $kategori = kategori::all();
-        $berita = berita::all();
-        $Post = ayam::all();
         $Post = ayam::where('kategori_id', $id)->get();
-        $getCartList = $this->getCartList();
-        $getCartNumber = $this->getCartNumber();
-
-        return view('cart', compact('user_id', 'data', 'user', 'getCartList', 'getCartNumber', 'kontak', 'Post', 'Pagination', 'kategori', 'berita', 'jumlah'))->with('Post', $Post);
+        return view('cart', compact('Pagination'))->with('Post', $Post);
     }
     public function create()
     {
@@ -286,29 +164,23 @@ class frontendController extends Controller
 
     public function destroy(string $id)
     {
-        $data =  berita::where('id', $id)->first();
+        $data =  Berita::where('id', $id)->first();
         File::delete(public_path('foto') . '/' . $data->foto);
-
         // masukan data
         berita::where('id', $id)->delete();
         return redirect('berita')->with('success', 'berhasil hapus data');
     }
     public function delete($id)
     {
-        $berita =     berita::find($id);
+        $berita = Berita::find($id);
         $berita->delete();
         return redirect('berita')->with('success', 'berhasil update data');
     }
 
     public function kontak()
     {
-        $berita = berita::all();
-        $kontak = kontak::all();
-        $kategori = kategori::all();
-        $Post = ayam::all();
-        $getCartList = $this->getCartList();
-        $getCartNumber = $this->getCartNumber();
-        return view('kontak', compact('getCartList', 'getCartNumber', 'kontak', 'Post', 'kategori', 'berita'));
+        $kontak = Kontak::all();
+        return view('kontak', compact('kontak'));
     }
 
 

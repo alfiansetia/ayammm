@@ -15,12 +15,12 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string("author");
-            $table->string("title");
-            $table->text("body");
-            $table->text("cover");
-            $table->foreignId('nama')->nullable()->constrained();
+            $table->unsignedBigInteger('ayam_id');
+            $table->string('title');
+            $table->text('body');
+            $table->string('cover');
             $table->timestamps();
+            $table->foreign('ayam_id')->references('id')->on('ayam')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

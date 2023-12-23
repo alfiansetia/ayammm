@@ -15,9 +15,10 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string("image");
-            $table->foreignId("ayam_id")->constraint("ayam")->onDelete("cascade");
+            $table->unsignedBigInteger('ayam_id');
+            $table->string('image');
             $table->timestamps();
+            $table->foreign('ayam_id')->references('id')->on('ayam')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 

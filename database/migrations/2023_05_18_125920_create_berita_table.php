@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jenis_ayam', function (Blueprint $table) {
+        Schema::create('berita', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_ayam');
-
+            $table->unsignedBigInteger('user_id');
+            $table->string('judul');
+            $table->date('tanggal')->useCurrent();
+            $table->text('isi');
+            $table->string('foto');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jenis_ayam');
+        Schema::dropIfExists('berita');
     }
 };

@@ -23,7 +23,6 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'keranjang_id',
     ];
 
     /**
@@ -45,10 +44,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
     public function keranjang()
     {
-
-        // return $this->hasMany(keranjang::class);
-        return $this->belongsTo(keranjang::class);
+        return $this->hasMany(Keranjang::class)->where('user_id', auth()->id());
     }
 }

@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kategori extends Model
+class JenisAyam extends Model
 {
     use HasFactory;
 
-    protected $table = 'kategori';
+    protected $table = 'jenis_ayam';
+
     protected $primaryKey = 'id';
+
     protected $guarded = ['id'];
 
     public function ayams()

@@ -14,7 +14,7 @@
         <br>
         Untuk Selengkapnya silahkan Menghubungi Admin
         @foreach ($kontak as $item)
-        {{ $item->no_telp }}
+            {{ $item->no_telp }}
         @endforeach
     </p>
 
@@ -31,18 +31,16 @@
 
             <td style="text-align: center;">Foto</td>
         </tr>
-        @foreach($query as $item)
-        <tr>
-            <td style="text-align: center;">{{$item->ayam->kode_ayam}}</td>
-            <td style="text-align: center;">{{$item->ayam->jenis_ayam_id}}</td>
-            <td style="text-align: center;"> {{ $item->qty }}</td>
-            <td style="text-align: center;">{{$item->ayam->deskripsi}}</td>
-            <!-- @if($item->$ayam)
-            <td style="text-align: center;">{{ $item->kategori->implode('jenis_ayam') }}</td>
-            @endif -->
-            <td style="text-align: center;"> <img style="height:80px ; width:80px" src="cover/{{ $item->ayam->cover }}" alt="img"></td>
+        @foreach ($query as $item)
+            <tr>
+                <td style="text-align: center;">{{ $item->ayam->kode }}</td>
+                <td style="text-align: center;">{{ $item->ayam->jenis->nama }}</td>
+                <td style="text-align: center;"> {{ $item->qty }}</td>
+                <td style="text-align: center;">{{ $item->ayam->deskripsi }}</td>
+                <td style="text-align: center;"> <img style="height:80px ; width:80px" src="{{ $item->ayam->cover }}"
+                        alt="img"></td>
 
-        </tr>
+            </tr>
         @endforeach
 
 

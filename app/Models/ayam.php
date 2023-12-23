@@ -7,43 +7,34 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\Image;
 
-class ayam extends Model
+class Ayam extends Model
 {
     use HasFactory;
-    protected $table = "ayam";
-    protected $fillable = [
-        'jenis_ayam_id',
-        'kode_ayam',
-        'berat',
-        'status',
-        'usia',
-        'kategori_id',
-        'deskripsi',
-        'cover',
-    ];
+    protected $table = 'ayam';
+    protected $guarded = ['id'];
 
     public function kategori()
     {
 
-        return $this->belongsTo(kategori::class);
+        return $this->belongsTo(Kategori::class);
     }
-    public function jenis_ayam()
+    public function jenis()
     {
-
-        return $this->belongsTo(jenis_ayam::class);
+        return $this->belongsTo(JenisAyam::class, 'jenis_ayam_id');
     }
+
     public function detail($id)
     {
         return DB::table('ayam', 'jenis_ayam')->where('id', $id)->first();
     }
+
     public function images()
     {
         return $this->hasMany(Image::class);
     }
+
     public function keranjang()
     {
-
-        return $this->hasMany(keranjang::class);
-        // return $this->belongsTo(keranjang::class);
+        return $this->hasMany(Keranjang::class);
     }
 }

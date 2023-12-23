@@ -15,19 +15,18 @@ class MyAccountController extends Controller
     {
         $this->middleware('auth');
     }
-    public function add_to_cart($id_ayam = null)
+    public function add_to_cart($ayam_id = null)
     {
 
-        if ($id_ayam != null) {
+        if ($ayam_id != null) {
             $user = auth()->user();
             $data = keranjang::updateOrCreate([
-                'ayam_id' => $id_ayam,
-                'users_id' => $user->id,
+                'ayam_id' => $ayam_id,
+                'user_id' => $user->id,
             ], [
-                'ayam_id'   => $id_ayam,
+                'ayam_id'   => $ayam_id,
                 'qty'       => 1,
-                'users_id'  => $user->id,
-                'status'    => 1
+                'user_id'  => $user->id,
             ]);
         }
         return redirect()->back();
@@ -36,9 +35,6 @@ class MyAccountController extends Controller
     {
         $data = keranjang::with(['ayam'])->orderBy('created_at')->get();
         $user = keranjang::with(['User'])->orderBy('created_at')->get();
-
-
-
         return view('cart', compact('data', 'user'));
     }
 }

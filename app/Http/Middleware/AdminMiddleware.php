@@ -17,9 +17,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            // ADMIN ROLE = 0
-            // USER ROLE = 1
-            if (Auth::user()->role == '0') {
+            if (Auth::user()->role === 'admin') {
                 return $next($request);
             } else {
                 return redirect('/')->with('message', 'Kamu tidak bisa mengakses halaman Ini');

@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pegawai', function (Blueprint $table) {
+        Schema::create('detail_transaksi', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 100);
-            $table->string('alamat', 100);
-            $table->string('tgl', 100);
+            $table->unsignedBigInteger('ayam_id');
+            $table->integer('qty')->default(0);
+            $table->integer('harga')->default(0);
             $table->timestamps();
+            $table->foreign('ayam_id')->references('id')->on('ayam')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pegawai');
+        Schema::dropIfExists('transaksi');
     }
 };
