@@ -16,21 +16,7 @@ use Illuminate\Support\Facades\DB;
 
 class frontendController extends Controller
 {
-    
-    // show detail ayam Frontend
-    public function show(string $id)
-    {
-        $data_ayam_carosel = Ayam::orderBy('id', 'desc')->paginate(8);
-        $post = Ayam::with('images')->where('id', $id)->first();
-        return view('detail', compact('post', 'data_ayam_carosel'));
-    }
-    public function tampil($id)
-    {
-        $Pagination = Ayam::orderBy('id', 'desc')->paginate(8);
-        $berita = Berita::all();
-        $post = Ayam::where('kategori_id', $id)->get();
-        return view('tampil', compact('Pagination', 'berita'))->with('post', $post);
-    }
+
 
     public function detail(string $id)
     {
@@ -80,26 +66,6 @@ class frontendController extends Controller
         return $pdf->download('laporan.pdf');
     }
 
-    public function koleksi()
-    {
-        $post = Ayam::with('jenis')->orderBy('id', 'desc')->paginate(8);
-        return view('koleksi', compact('post'));
-    }
-
-    public function berita()
-
-    {
-        $postGaleri = Ayam::orderBy('id', 'asc')->paginate(8);
-        $berita = Berita::orderBy('id', 'desc')->paginate(3);
-        return view('berita', compact('berita', 'postGaleri'));
-    }
-
-    public function showBerita(string $id)
-    {
-        $beritaPagination = berita::orderBy('id', 'desc')->paginate(3);
-        $data = Berita::with('user')->where('id', $id)->first();
-        return view('showBerita', compact('data', 'beritaPagination'));
-    }
 
     public function cartsalah($id)
     {
@@ -175,12 +141,6 @@ class frontendController extends Controller
         $berita = Berita::find($id);
         $berita->delete();
         return redirect('berita')->with('success', 'berhasil update data');
-    }
-
-    public function kontak()
-    {
-        $kontak = Kontak::all();
-        return view('kontak', compact('kontak'));
     }
 
 

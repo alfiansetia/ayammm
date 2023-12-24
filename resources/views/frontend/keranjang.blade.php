@@ -22,7 +22,7 @@
                     <h5 class="cart-drawer-heading text-align-center"> {{ $user->name }}</h5>
                 @endauth
                 @auth
-                    @foreach ($user->keranjang as $data)
+                    @foreach ($user->keranjang ?? [] as $data)
                         <div class="minicart-item d-flex">
                             <div class="mini-img-wrapper">
                                 <img class="mini-img" src="{{ $data->ayam->cover }}" alt="img">
@@ -64,7 +64,7 @@
             </div> --}}
 
             <div class="minicart-btn-area">
-                <form action="" method="POST">
+                <form action="{{ route('index.transaksi.store') }}" method="POST">
                     @csrf
                     <div class="form-group mb-2">
                         <label for="nama">Nama</label>
@@ -80,8 +80,8 @@
                         <label for="alamat">Alamat</label>
                         <textarea name="alamat" id="alamat" class="form-control" placeholder="Masukkan Alamat" required>{{ old('alamat') }}</textarea>
                     </div>
-                    <button type="submit" class="minicart-btn btn-secondary">Buat Pesanan</button>
-                    <a href="https://wa.me/{{ $kontak->no_telp }}" class="minicart-btn btn-primary">Pesan</a>
+                    <button type="submit" class="btn minicart-btn btn-primary bg-primary">Buat Pesanan</button>
+                    <a href="{{ route('index.transaksi') }}" class="minicart-btn btn-primary">Daftar Pesanan</a>
                 </form>
             </div>
         </div>

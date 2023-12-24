@@ -17,7 +17,7 @@
                         </div>
                         <div class="collection-product-container">
                             <div class="row">
-                                @foreach ($post as $item)
+                                @foreach ($data as $item)
                                     <div class="col-lg-4 col-md-6 col-6" data-aos="fade-up" data-aos-duration="700">
                                         <div class="product-card">
                                             <div class="product-card-img">

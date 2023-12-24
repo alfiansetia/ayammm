@@ -21,7 +21,7 @@
                                     <div class="col-lg-4 col-md-6 col-6" data-aos="fade-up" data-aos-duration="700">
                                         <div class="product-card">
                                             <div class="product-card-img">
-                                                <a class="hover-switch" href="{{ url('/detail/' . $item->id . '/show') }}">
+                                                <a class="hover-switch" href="{{ route('index.koleksi.show', $item->id) }}">
                                                     <img style="width:255px ;height:255px; border: 2px solid red;"
                                                         class="secondary-img" src="{{ $item->cover }}" alt="product-img">
                                                     <img style="width:250px ;height:250px; border: 2px solid red; padding: 10px; border-radius: 25px;"
@@ -35,7 +35,7 @@
 
                                                 <div
                                                     class="product-card-action product-card-action-2 justify-content-center">
-                                                    <a href="{{ url('/detail/' . $item->id . '/show') }}"
+                                                    <a href="{{ route('index.koleksi.show', $item->id) }}"
                                                         class="action-card action-quickview">
                                                         <svg width="26" height="26" viewBox="0 0 26 26"
                                                             fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -128,7 +128,7 @@
                                                     <span class="filter-checkbox rounded me-2"></span>
                                                     <span class="filter-text">
                                                         <a style="color:#000"
-                                                            href="{{ url("tampil/$item->id") }}">{{ $item->nama }}</a></span>
+                                                            href="{{ route('index.kategori.show', $item->id) }}">{{ $item->nama }}</a></span>
                                                 </label>
                                             </li>
                                         </ul>

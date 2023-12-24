@@ -222,14 +222,14 @@
                                     </li>
                                     <li class="menu-list-item nav-item has-dropdown">
                                         <div class="mega-menu-header">
-                                            <a class="nav-link" href="{{ url('/informasi') }}">Berita & Acara</a>
+                                            <a class="nav-link" href="{{ route('index.berita') }}">Berita & Acara</a>
 
                                         </div>
 
                                     </li>
 
                                     <li class="menu-list-item nav-item">
-                                        <a class="nav-link" href="{{ url('/kontak') }}">Kontak</a>
+                                        <a class="nav-link" href="{{ route('index.kontak') }}">Kontak</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -265,7 +265,7 @@
                                             d="M12 0.000183105C9.25391 0.000183105 7 2.25409 7 5.00018V6.00018H2.0625L2 6.93768L1 24.9377L0.9375 26.0002H23.0625L23 24.9377L22 6.93768L21.9375 6.00018H17V5.00018C17 2.25409 14.7461 0.000183105 12 0.000183105ZM12 2.00018C13.6562 2.00018 15 3.34393 15 5.00018V6.00018H9V5.00018C9 3.34393 10.3438 2.00018 12 2.00018ZM3.9375 8.00018H7V11.0002H9V8.00018H15V11.0002H17V8.00018H20.0625L20.9375 24.0002H3.0625L3.9375 8.00018Z"
                                             fill="black"></path>
                                     </svg>
-                                    @if ($user->keranjang_count > 0)
+                                    @if ($user->keranjang_count ?? 0 > 0)
                                         <span class="badge badge-danger"
                                             style="z-index: index 1; border-radius: 50%; background-color:red; color:#fff ; margin-left: 10 px;">{{ $user->keranjang_count }}</span>
                                     @endif
@@ -367,7 +367,8 @@
                                     </h4>
                                     <ul class="footer-menu list-unstyled mb-0 d-md-block">
 
-                                        <li class="footer-menu-item"><a href="{{ url('/kontak') }}">Kontak</a></li>
+                                        <li class="footer-menu-item"><a href="{{ route('index.kontak') }}">Kontak</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -512,11 +513,11 @@
 
                             </li>
                             <li class="menu-list-item nav-item">
-                                <a class="nav-link" href="{{ url('/informasi') }}">Informasi & Berita</a>
+                                <a class="nav-link" href="{{ route('index.berita') }}">Informasi & Berita</a>
                             </li>
 
                             <li class="menu-list-item nav-item">
-                                <a class="nav-link" href="{{ url('/kontak') }}">Kontak</a>
+                                <a class="nav-link" href="{{ route('index.kontak') }}">Kontak</a>
                             </li>
                         </ul>
                     </nav>

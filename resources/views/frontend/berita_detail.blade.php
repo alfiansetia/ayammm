@@ -95,10 +95,10 @@
 
                             <div class="filter-widget">
                                 <div class="filter-header faq-heading heading_18 d-flex align-items-center border-bottom">
-                                    Latest Post
+                                    Berita Terbaru
                                 </div>
                                 <div class="filter-related">
-                                    @foreach ($beritaPagination as $item)
+                                    @foreach ($list_berita as $item)
                                         <div class="related-item related-item-article d-flex">
                                             <div class="related-img-wrapper">
                                                 <img class="related-img" src="{{ $item->foto }}" alt="img">
@@ -106,7 +106,7 @@
                                             <div class="related-product-info">
                                                 <h2 class="related-heading text_14">
                                                     <a
-                                                        href="{{ url('/showBerita/' . $item->id . '/showBerita') }}">{{ $item->judul }}</a>
+                                                        href="{{ route('index.berita.show', $item->id) }}">{{ $item->judul }}</a>
                                                 </h2>
                                                 <p class="article-card-published text_12 d-flex align-items-center mt-2">
                                                     <span class="article-date d-flex align-items-center">

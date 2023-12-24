@@ -57,8 +57,8 @@
                     <h3 class="product-card-title">
 
                     </h3>
-                    <a href="{{ url('/keranjang/') }}" class="minicart-btn btn-secondary">Lihat Keranjang</a>
-                    <a href="https://wa.me/{{ $kontak->no_telp }}" class="minicart-btn btn-primary">Pesan</a>
+                    <a href="{{ route('index.keranjang') }}" class="minicart-btn btn-secondary">Lihat Keranjang</a>
+                    <a href="{{ route('index.transaksi') }}" class="minicart-btn btn-primary">Daftar Pesanan</a>
                 </div>
             </div>
         </div>

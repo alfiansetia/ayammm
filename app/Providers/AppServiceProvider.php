@@ -32,8 +32,8 @@ class AppServiceProvider extends ServiceProvider
                 'layouts_frontend.template',
                 'frontend.partial.berita',
                 'koleksi',
-                'detail',
-                'keranjang',
+                'frontend.detail',
+                'frontend.keranjang',
             ],
             function ($view) {
                 $view->with('user', User::with('keranjang')->withCount('keranjang')->find(auth()->id()));

@@ -10,7 +10,7 @@
                     <div class="col-lg-3 col-md-6 col-6" data-aos="fade-up" data-aos-duration="700">
                         <div class="product-card">
                             <div class="product-card-img">
-                                <a class="hover-switch" href="{{ url('/detail/' . $item->id . '/show') }}">
+                                <a class="hover-switch" href="{{ route('index.koleksi.show', $item->id) }}">
                                     <img style="width:255px ;height:255px; border: 2px solid red;" class="secondary-img"
                                         src="{{ $item->cover }}" alt="product-img">
                                     <img style="width:250px ;height:250px; border: 2px solid red; padding: 10px; border-radius: 25px;"
@@ -18,7 +18,7 @@
                                 </a>
 
                                 <div class="product-card-action product-card-action-2 justify-content-center">
-                                    <a href="{{ url('/detail/' . $item->id . '/show') }}"
+                                    <a href="{{ route('index.koleksi.show', $item->id) }}"
                                         class="action-card action-quickview">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
                                             <path

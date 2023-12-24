@@ -1,11 +1,15 @@
 <?php
 
 use App\Http\Controllers\dashboard_kontak;
+use App\Http\Controllers\Frontend\BeritaController;
 use App\Http\Controllers\Frontend\FrontendController as FrontendFrontendController;
+use App\Http\Controllers\Frontend\KategoriController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\frontendController;
 use App\Http\Controllers\Frontend\KeranjangController;
 use App\Http\Controllers\Frontend\KoleksiController;
+use App\Http\Controllers\Frontend\KontakController;
+use App\Http\Controllers\Frontend\TransaksiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MyAccountController;
 use Illuminate\Support\Facades\Auth;
@@ -13,19 +17,27 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::get('/', [FrontendFrontendController::class, 'index'])->name('index');
-Route::get('/koleksi', [KoleksiController::class, 'koleksi'])->name('index.koleksi');
-Route::get('/koleksi/{ayam}/', [KoleksiController::class, 'show'])->name('index.koleksi.show');
+Route::get('/koleksi', [KoleksiController::class, 'index'])->name('index.koleksi');
+Route::get('/koleksi/{ayam}', [KoleksiController::class, 'show'])->name('index.koleksi.show');
 
-Route::get('/showBerita/{id}/showBerita', [frontendController::class, 'showBerita']);
-Route::get('/informasi', [frontendController::class, 'berita']);
-Route::get('/keranjang', [frontendController::class, 'showKeranjang']);
-Route::post('/keranjang', [KeranjangController::class, 'store']);
-Route::get('/tampil/{id}', [frontendController::class, 'tampil']);
-Route::get('/kontak', [frontendController::class, 'kontak']);
+Route::get('/list-kategori/{kategori}', [KategoriController::class, 'show'])->name('index.kategori.show');
+
+Route::get('/list-berita', [BeritaController::class, 'index'])->name('index.berita');
+Route::get('/list-berita/{berita}', [BeritaController::class, 'show'])->name('index.berita.show');
+
+Route::get('/kontak', [KontakController::class, 'index'])->name('index.kontak');
+
+
 Route::get('/exportlaporan', [frontendController::class, 'exportlaporan'])->name('exportlaporan');
 
 
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/list-keranjang', [KeranjangController::class, 'index'])->name('index.keranjang');
+
+    Route::get('/list-transaksi/{transaksi}', [TransaksiController::class, 'show'])->name('index.transaksi.show');
+    Route::get('/list-transaksi', [TransaksiController::class, 'index'])->name('index.transaksi');
+    Route::post('/list-transaksi', [TransaksiController::class, 'store'])->name('index.transaksi.store');
 
     Route::get('add_to_cart', [MyAccountController::class, 'add_to_cart'])->name('/add_to_cart');
     Route::get('add_to_cart/{x}', [MyAccountController::class, 'add_to_cart'])->name('/add_to_cart');

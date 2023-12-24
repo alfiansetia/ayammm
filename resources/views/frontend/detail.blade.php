@@ -16,8 +16,8 @@
                                         "arrows": false,
                                         "asNavFor": ".img-thumb-slider"
                                     }'>
-                                    @if (count($post->images) > 0)
-                                        @foreach ($post->images as $img)
+                                    @if (count($data->images) > 0)
+                                        @foreach ($data->images as $img)
                                             <div class="img-large-wrapper">
 
                                                 <a href="/images/{{ $img->image }}" data-fancybox="gallery">
@@ -45,8 +45,8 @@
                                         "swipeToSlide": true,
                                         "asNavFor": ".img-large-slider"
                                     }'>
-                                    @if (count($post->images) > 0)
-                                        @foreach ($post->images as $img)
+                                    @if (count($data->images) > 0)
+                                        @foreach ($data->images as $img)
                                             <div>
                                                 <div class="img-thumb-wrapper">
                                                     <img src="{{ $img->image }}" alt="img">
@@ -64,20 +64,20 @@
                     </div>
                     <div class="col-lg-6 col-md-12 col-12">
                         <div class="product-details ps-lg-4">
-                            <div class="mb-3"><span class="product-availability">{{ $post->status }}</span></div>
-                            <h2 class="product-title mb-3">{{ $post->jenis->nama }}</h2>
+                            <div class="mb-3"><span class="product-availability">{{ $data->status }}</span></div>
+                            <h2 class="product-title mb-3">{{ $data->jenis->nama }}</h2>
 
                             <div class="product-sku product-meta mb-1">
-                                <strong class="label">Kode :</strong> {{ $post->kode }}
+                                <strong class="label">Kode :</strong> {{ $data->kode }}
                             </div>
                             <div class="product-sku product-meta mb-1">
-                                <strong class="label">Umur :</strong> {{ $post->usia }}
+                                <strong class="label">Umur :</strong> {{ $data->usia }}
                             </div>
                             <div class="product-sku product-meta mb-1">
-                                <strong class="label">Berat :</strong> {{ $post->berat }}
+                                <strong class="label">Berat :</strong> {{ $data->berat }}
                             </div>
                             <div class="product-vendor product-meta mb-3">
-                                <strong class="label">Jenis Ayam :</strong> {{ $post->jenis->nama }}
+                                <strong class="label">Jenis Ayam :</strong> {{ $data->jenis->nama }}
                             </div>
 
 
@@ -155,8 +155,8 @@
                         <div class="row">
                             <div class="col-lg-7 col-md-12 col-12">
                                 <div class="desc-content">
-                                    <h4 class="heading_18 mb-3">{{ $post->jenis->nama }}</h4>
-                                    <p class="text_16 mb-4">{{ $post->deskripsi }}</p>
+                                    <h4 class="heading_18 mb-3">{{ $data->jenis->nama }}</h4>
+                                    <p class="text_16 mb-4">{{ $data->deskripsi }}</p>
                                 </div>
                             </div>
 
@@ -203,7 +203,7 @@
                             <div class="new-item" data-aos="fade-up" data-aos-duration="300">
                                 <div class="product-card">
                                     <div class="product-card-img">
-                                        <a class="hover-switch" href="{{ url('/tampil') }}">
+                                        <a class="hover-switch" href="{{ route('index.koleksi.show', $item->id) }}">
                                             <img style="width:255px ;height:255px; border: 2px solid red;"
                                                 class="secondary-img" src="{{ $item->cover }}" alt="product-img">
 
@@ -212,7 +212,7 @@
                                         </a>
 
                                         <div class="product-card-action product-card-action-2">
-                                            <a href="{{ url('/detail/' . $item->id . '/show') }}"
+                                            <a href="{{ route('index.koleksi.show', $item->id) }}"
                                                 class="quickview-btn btn-primary">QUICKVIEW</a>
                                             <a href="https://wa.me/{{ $kontak->no_telp }}"
                                                 class="addtocart-btn btn-primary">Pesan</a>
@@ -228,8 +228,9 @@
                                         </a>
                                     </div>
                                     <div class="product-card-details text-center">
-                                        <h3 class="product-card-title"><a href="collection-left-sidebar.html">
-                                                {{ $item->jenis_ayam_id }}</a>
+                                        <h3 class="product-card-title"><a
+                                                href="{{ route('index.koleksi.show', $item->id) }}">
+                                                {{ $item->jenis->nama }}</a>
                                         </h3>
                                         <div class="product-card-price">
                                             <span class="card-price-regular">$1529</span>

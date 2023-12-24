@@ -40,7 +40,7 @@
                     @foreach ($berita as $item)
                         <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-duration="700">
                             <div class="article-card bg-transparent p-0 shadow-none">
-                                <a class="article-card-img-wrapper" href="article.html">
+                                <a class="article-card-img-wrapper" href="{{ route('index.berita.show', $item->id) }}">
                                     <img src="{{ $item->foto }}" alt="img" class="article-card-img rounded">
 
                                     <span class="article-tag article-tag-absolute rounded">{{ $item->judul }}</span>
@@ -69,8 +69,7 @@
                                     </span>
                                 </p>
                                 <h2 class="limited-text">
-                                    <a class="heading_18  tes"
-                                        href="{{ url('/showBerita/' . $item->id . '/showBerita') }}">
+                                    <a class="heading_18  tes" href="{{ route('index.berita.show', $item->id) }}">
                                         {{ $item->isi }}
                                     </a>
                                 </h2>

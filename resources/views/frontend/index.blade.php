@@ -36,7 +36,7 @@
                                     Look for your inspiration here
                                 </p>
                                 <a class="btn-primary slide-btn animate__animated animate__fadeInUp"
-                                    href="{{ url('/koleksi') }}   "
+                                    href="{{ route('index.koleksi') }}   "
                                     data-animation="animate__animated animate__fadeInUp">SHOP
                                     NOW</a>
                             </div>
