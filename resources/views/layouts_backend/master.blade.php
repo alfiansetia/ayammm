@@ -67,21 +67,28 @@
                             aria-labelledby="dropdownMenuButton">
                             <li class="mb-2">
                                 <a class="dropdown-item border-radius-md" href="javascript:;">
-                                    <div class="d-flex py-1">
-                                        <div class="my-auto">
-                                            <img src="{{ asset('backend_template') }}/assets/img/team-2.jpg"
-                                                class="avatar avatar-sm  me-3 ">
+                                    @forelse ($messages as $item)
+                                        <div class="d-flex py-1"
+                                            onclick="window.location.href = '{{ $item->link }}';">
+                                            <div class="my-auto">
+                                                <img src="{{ asset('backend_template') }}/assets/img/team-2.jpg"
+                                                    class="avatar avatar-sm  me-3 ">
+                                            </div>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="text-sm font-weight-normal mb-1">
+                                                    {{ $item->message }}
+                                                </h6>
+                                                <p class="text-xs text-secondary mb-0 ">
+                                                    <i class="fa fa-clock me-1"></i>
+                                                    {{ \Carbon\Carbon::parse($item->date)->diffForHumans() }}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="text-sm font-weight-normal mb-1">
-                                                <span class="font-weight-bold">New message</span> from Laur
-                                            </h6>
-                                            <p class="text-xs text-secondary mb-0 ">
-                                                <i class="fa fa-clock me-1"></i>
-                                                13 minutes ago
-                                            </p>
+                                    @empty
+                                        <div class="alert alert-danger" role="alert">
+                                            Tidak ada Pesan!
                                         </div>
-                                    </div>
+                                    @endforelse
                                 </a>
                             </li>
 

@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ayam;
-use App\Models\client;
-use App\Models\keranjang;
-use App\Models\transaksi;
+use App\Models\Message;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -16,7 +14,7 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $trans = transaksi::orderBy('id', 'desc')->paginate(10);
+        $trans = Transaksi::orderBy('id', 'desc')->paginate(10);
         return view('layouts/transaksi/index')->with('trans', $trans);
     }
 
@@ -25,7 +23,7 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        $data = transaksi::orderBy('id', 'desc')->paginate(10);
+        $data = Transaksi::orderBy('id', 'desc')->paginate(10);
         return view('layouts/transaksi/create')->with('data', $data);
     }
 
@@ -72,9 +70,16 @@ class TransaksiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Transaksi $transaksi)
     {
-        //
+        $message = Message::where('link', route('transaksi.show', $transaksi->id))
+            ->where('is_read', 'no')->first();
+        if ($message) {
+            $message->update([
+                'is_read' => 'yes',
+            ]);
+        }
+        return response()->json($transaksi->load('details'));
     }
 
     /**

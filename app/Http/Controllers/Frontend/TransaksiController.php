@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\DetailTransaksi;
+use App\Models\Message;
 use App\Models\Transaksi;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -55,6 +56,11 @@ class TransaksiController extends Controller
             ]);
             $value->delete();
         }
+        Message::create([
+            'date'      => now(),
+            'message'   => 'Pesanan baru, Nomor TRX : ' . $trx->nomor,
+            'link'      => route('transaksi.show', $trx->id),
+        ]);
         return redirect()->back()->with('message', 'Success Buat Pesanan !');
     }
 }

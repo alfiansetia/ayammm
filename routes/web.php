@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\TransaksiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JenisAyamController;
 use App\Http\Controllers\KategoriController as ControllersKategoriController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TransaksiController as ControllersTransaksiController;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,6 +52,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('transaksi', ControllersTransaksiController::class);
         // Route::resource('info', beritaController::class);
         // Route::resource('kontak', dashboard_kontak::class);
-        // Route::resource('kategori', kategoriController::class);
+        Route::resource('message', MessageController::class);
     });
 });

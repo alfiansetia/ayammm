@@ -12,7 +12,7 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role === 'admin') {
+        if (auth()->check() && auth()->user()->role === 'admin') {
             return redirect()->route('ayam.index');
         }
         $ayam_populer = Ayam::orderBy('id', 'desc')->paginate(8);
