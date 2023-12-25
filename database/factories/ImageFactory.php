@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Image>
@@ -16,8 +18,14 @@ class ImageFactory extends Factory
      */
     public function definition(): array
     {
+        $sourcePath = public_path('sample_images');
+        $files = File::allFiles($sourcePath);
+        $fileToCopy = $files[rand(0, count($files) - 1)];
+        $destinationPath = public_path('images');
+        $newFileName = Str::random(15) . '.jpg';
+        File::copy($fileToCopy, $destinationPath . '/' . $newFileName);
         return [
-            'image' => fake()->imageUrl(),
+            'image' => $newFileName,
         ];
     }
 }

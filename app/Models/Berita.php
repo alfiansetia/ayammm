@@ -11,6 +11,15 @@ class Berita extends Model
     protected $table = 'berita';
     protected $guarded = ['id'];
 
+    public function getFotoAttribute($value)
+    {
+        if ($value && file_exists(public_path('berita/' . $value))) {
+            return url('/berita/' . $value);
+        } else {
+            return url('/sample_berita/default.jpg');
+        }
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

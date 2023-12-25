@@ -7,6 +7,7 @@ use App\Models\JenisAyam;
 use App\Models\Kategori;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class AyamSeeder extends Seeder
 {
@@ -15,6 +16,9 @@ class AyamSeeder extends Seeder
      */
     public function run(): void
     {
+        if (file_exists(public_path('cover'))) {
+            File::cleanDirectory(public_path('cover'));
+        }
         $kategori = Kategori::all();
         $jenis = JenisAyam::all();
         for ($i = 0; $i < 20; $i++) {

@@ -13,6 +13,15 @@ class Ayam extends Model
     protected $table = 'ayam';
     protected $guarded = ['id'];
 
+    public function getCoverAttribute($value)
+    {
+        if ($value && file_exists(public_path('cover/' . $value))) {
+            return url('/cover/' . $value);
+        } else {
+            return url('/sample_cover/default.jpg');
+        }
+    }
+
     public function kategori()
     {
 
