@@ -12,6 +12,9 @@ class FrontendController extends Controller
 {
     public function index()
     {
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('ayam.index');
+        }
         $ayam_populer = Ayam::orderBy('id', 'desc')->paginate(8);
         $berita = Berita::with('user')->orderBy('id', 'desc')->paginate(3);
         return view('frontend.index', compact('berita', 'ayam_populer'));

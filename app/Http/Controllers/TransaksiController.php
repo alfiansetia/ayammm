@@ -16,7 +16,6 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $data = keranjang::with('User')->paginate(2);
         $trans = transaksi::orderBy('id', 'desc')->paginate(10);
         return view('layouts/transaksi/index')->with('trans', $trans);
     }

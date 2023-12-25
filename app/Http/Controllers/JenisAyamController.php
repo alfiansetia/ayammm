@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\JenisAyam;
 use Illuminate\Http\Request;
 
-class pelangganController extends Controller
+class JenisAyamController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = User::orderBy('id', 'desc')->paginate(10);
-        return view('layouts/pelanggan/index')->with('data', $data);
+        $data = JenisAyam::paginate(10);
+        return view('layouts.jenis_ayam.index', compact('data'));
     }
 
     /**
