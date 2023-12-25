@@ -2,7 +2,6 @@
 @section('content')
     <div class="container">
         <div class="breadcrumb">
-
             <div class="container">
                 <ul class="list-unstyled d-flex align-items-center m-0">
                     <li><a href="/">Home</a></li>
@@ -18,20 +17,17 @@
                     </li>
                     <li>Pesanan Anda</li>
                 </ul>
-                @auth
-                    <h5 class="cart-drawer-heading text-align-center"> {{ $user->name }}</h5>
-                @endauth
-                @auth
-                    @foreach ($user->keranjang ?? [] as $data)
-                        <div class="minicart-item d-flex">
-                            <div class="mini-img-wrapper">
-                                <img class="mini-img" src="{{ $data->ayam->cover }}" alt="img">
-                            </div>
-                            <div class="product-info">
-                                <h2 class="product-title"><a href="">{{ $data->ayam->jenis->nama }}</a></h2>
-                                <p class="product-vendor">{{ $data->ayam->kode }}</p>
-                                <div class="misc d-flex align-items-end justify-content-between">
-                                    <div class="quantity d-flex align-items-center justify-content-between">
+                <h5 class="cart-drawer-heading text-align-center mt-4"> {{ $user->name }}</h5>
+                @foreach ($user->keranjang ?? [] as $data)
+                    <div class="minicart-item d-flex">
+                        <div class="mini-img-wrapper">
+                            <img class="mini-img" src="{{ $data->ayam->cover }}" alt="img">
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-title"><a href="">{{ $data->ayam->jenis->nama }}</a></h2>
+                            <p class="product-vendor">{{ $data->ayam->kode }}</p>
+                            <div class="misc d-flex align-items-end justify-content-between">
+                                {{-- <div class="quantity d-flex align-items-center justify-content-between">
                                         <button class="qty-btn dec-qty"><img
                                                 src="{{ asset('frontend_template/landingPage') }}/assets/img/icon/minus.svg"
                                                 alt="minus"></button>
@@ -39,18 +35,21 @@
                                         <button class="qty-btn inc-qty"><img
                                                 src="{{ asset('frontend_template/landingPage') }}/assets/img/icon/plus.svg"
                                                 alt="plus"></button>
-                                    </div>
-                                    <div class="product-remove-area d-flex flex-column align-items-end">
-
-                                        <button class="btn btn-danger btn-sm cart_remove"><i class="fa fa-trash-o"></i>
-                                            Delete</button>
-                                    </div>
+                                    </div> --}}
+                                <div class="product-remove-area d-flex flex-column align-items-end">
+                                    <form action="{{ route('index.keranjang.destroy', $data->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Hapus Item ini ?');"><i class="fa fa-trash-o"></i>
+                                            Hapus</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <!-- minicart item -->
-                    @endforeach
-                @endauth
+                    </div>
+                    <!-- minicart item -->
+                @endforeach
             </div>
         </div>
         <div class="minicart-footer">
@@ -68,17 +67,35 @@
                     @csrf
                     <div class="form-group mb-2">
                         <label for="nama">Nama</label>
-                        <input type="text" name="nama" id="nama" class="form-control" value="{{ old('nama') }}"
+                        <input type="text" name="nama" id="nama"
+                            class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}"
                             placeholder="Masukkan Nama" required>
+                        @error('nama')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="form-group mb-2">
                         <label for="telp">Telp</label>
-                        <input type="tel" name="telp" id="telp" class="form-control" value="{{ old('telp') }}"
+                        <input type="tel" name="telp" id="telp"
+                            class="form-control @error('telp') is-invalid @enderror" value="{{ old('telp') }}"
                             placeholder="Masukkan No Telp" required>
+                        @error('telp')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="form-group mb-3">
                         <label for="alamat">Alamat</label>
-                        <textarea name="alamat" id="alamat" class="form-control" placeholder="Masukkan Alamat" required>{{ old('alamat') }}</textarea>
+                        <textarea name="alamat" id="alamat" class="form-control @error('alamat') is-invalid @enderror"
+                            placeholder="Masukkan Alamat" required>{{ old('alamat') }}</textarea>
+                        @error('alamat')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <button type="submit" class="btn minicart-btn btn-primary bg-primary">Buat Pesanan</button>
                     <a href="{{ route('index.transaksi') }}" class="minicart-btn btn-primary">Daftar Pesanan</a>

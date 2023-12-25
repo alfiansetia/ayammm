@@ -26,6 +26,11 @@ class TransaksiController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'nama'      => 'required|max:50',
+            'telp'      => 'required|max:15',
+            'alamat'    => 'required|max:250',
+        ]);
 
         $user = User::with('keranjang')->withCount('keranjang')->find(auth()->id());
         if ($user->keranjang_count < 1) {

@@ -258,7 +258,7 @@
                                     </svg>
                                 </a>
                                 <a class="header-action-item header-cart ms-4"
-                                    href="{{ url(' $cart->id.#drawer-cart') }}" data-bs-toggle="offcanvas">
+                                    href="{{ url('$cart->id.#drawer-cart') }}" data-bs-toggle="offcanvas">
                                     <svg class="icon icon-cart" width="24" height="26" viewBox="0 0 24 26"
                                         fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -303,7 +303,13 @@
             </div>
         </header>
         <!-- header end -->
-
+        @if (session()->has('message'))
+            <div class="container mt-3">
+                <div class="alert alert-danger" role="alert">
+                    {{ session()->get('message') }}
+                </div>
+            </div>
+        @endif
         @yield('content')
 
 

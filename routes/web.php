@@ -33,16 +33,13 @@ Route::get('/exportlaporan', [frontendController::class, 'exportlaporan'])->name
 
 Route::group(['middleware' => ['auth']], function () {
 
+    Route::delete('/list-keranjang/{keranjang}', [KeranjangController::class, 'destroy'])->name('index.keranjang.destroy');
     Route::get('/list-keranjang', [KeranjangController::class, 'index'])->name('index.keranjang');
+    Route::post('/list-keranjang', [KeranjangController::class, 'store'])->name('index.keranjang.store');
 
     Route::get('/list-transaksi/{transaksi}', [TransaksiController::class, 'show'])->name('index.transaksi.show');
     Route::get('/list-transaksi', [TransaksiController::class, 'index'])->name('index.transaksi');
     Route::post('/list-transaksi', [TransaksiController::class, 'store'])->name('index.transaksi.store');
-
-    Route::get('add_to_cart', [MyAccountController::class, 'add_to_cart'])->name('/add_to_cart');
-    Route::get('add_to_cart/{x}', [MyAccountController::class, 'add_to_cart'])->name('/add_to_cart');
-    Route::get('cart', [MyAccountController::class, 'cart'])->name('/cart');
-    Route::get('/cart/{id}', [frontendController::class, 'cart']);
 
     Route::delete('/remove_from_cart', [frontendController::class, 'remove'])->name('remove_from_cart');
     Route::patch('update_cart', [frontendController::class, 'update'])->name('update_cart');

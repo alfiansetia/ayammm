@@ -12,16 +12,18 @@
                 <!-- minicart item -->
 
                 @auth
-                    @foreach ($user->keranjang as $data)
+                    @foreach ($user->keranjang ?? [] as $item)
                         <div class="minicart-item d-flex">
                             <div class="mini-img-wrapper">
-                                <img class="mini-img" src="{{ $data->ayam->cover }}" alt="img">
+                                <img class="mini-img" src="{{ $item->ayam->cover }}" alt="img">
                             </div>
                             <div class="product-info">
-                                <h2 class="product-title"><a href="">{{ $data->ayam->jenis->nama }}</a></h2>
-                                <p class="product-vendor">{{ $data->ayam->kode }}</p>
+                                <h2 class="product-title"><a
+                                        href="{{ route('index.koleksi.show', $item->id) }}">{{ $item->ayam->jenis->nama }}</a>
+                                </h2>
+                                <p class="product-vendor">{{ $item->ayam->kode }}</p>
                                 <div class="misc d-flex align-items-end justify-content-between">
-                                    <div class="quantity d-flex align-items-center justify-content-between">
+                                    {{-- <div class="quantity d-flex align-items-center justify-content-between">
                                         <button class="qty-btn dec-qty"><img
                                                 src="{{ asset('frontend_template/landingPage') }}/assets/img/icon/minus.svg"
                                                 alt="minus"></button>
@@ -30,11 +32,16 @@
                                         <button class="qty-btn inc-qty"><img
                                                 src="{{ asset('frontend_template/landingPage') }}/assets/img/icon/plus.svg"
                                                 alt="plus"></button>
-                                    </div>
+                                    </div> --}}
                                     <div class="product-remove-area d-flex flex-column align-items-end">
 
-                                        <button class="btn btn-danger btn-sm cart_remove"><i class="fa fa-trash-o"></i>
-                                            Delete</button>
+                                        <form action="{{ route('index.keranjang.destroy', $item->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Hapus Item ini ?');"><i class="fa fa-trash-o"></i>
+                                                Hapus</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -76,45 +83,3 @@
         </div>
     </div>
 </div>
-
-
-<script type="text/javascript">
-    $(".cart_update").change(function(e) {
-        e.preventDefault();
-
-        var ele = $(this);
-
-        $.ajax({
-            url: "{{ route('update_cart') }}",
-            method: "patch",
-            data: {
-                _token: '{{ csrf_token() }}',
-                id: ele.parents("tr").attr("data-id"),
-                quantity: ele.parents("tr").find(".quantity").val()
-            },
-            success: function(response) {
-                window.location.reload();
-            }
-        });
-    });
-
-    $(".cart_remove").click(function(e) {
-        e.preventDefault();
-
-        var ele = $(this);
-
-        if (confirm("Do you really want to remove?")) {
-            $.ajax({
-                url: "{{ route('remove_from_cart') }}",
-                method: "DELETE",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: ele.parents("tr").attr("data-id")
-                },
-                success: function(response) {
-                    window.location.reload();
-                }
-            });
-        }
-    });
-</script>

@@ -27,19 +27,17 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->composer(
             [
-                'layouts_frontend.drawer',
                 'layouts_frontend.header',
                 'layouts_frontend.template',
                 'frontend.partial.berita',
-                'koleksi',
+                'frontend.transaksi',
+                'frontend.transaksi_detail',
                 'frontend.detail',
                 'frontend.keranjang',
             ],
             function ($view) {
                 $view->with('user', User::with('keranjang')->withCount('keranjang')->find(auth()->id()));
                 $view->with('kontak', Kontak::first());
-                // $view->with('berita', Berita::with('user')->orderBy('id', 'desc')->paginate(3));
-                // $view->with('kategori', Kategori::all());
                 $view->with('ayam', Ayam::orderBy('id', 'desc')->paginate(4));
             }
         );
