@@ -65,7 +65,7 @@ class TransaksiController extends Controller
         Message::create([
             'date'      => now(),
             'message'   => 'Pesanan baru, Nomor TRX : ' . $trx->nomor,
-            'link'      => route('transaksi.show', $trx->id),
+            'link'      => route('trans.show', $trx->id),
         ]);
         return redirect()->back()->with('message', 'Success Buat Pesanan !');
     }
