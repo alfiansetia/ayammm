@@ -32,6 +32,10 @@
                                             href="https://api.whatsapp.com/send?phone={{ $kontak->no_telp }}&text=Halo, konfirmasi pesanan dengan nomot TRX : {{ $item->nomor }}">Chat
                                             Admin</a>
                                     @endif
+                                    @if ($item->status === 'success')
+                                        <a class="btn btn-sm btn-secondary"
+                                            href="{{ route('index.transaksi.download', $item->id) }}">Download</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

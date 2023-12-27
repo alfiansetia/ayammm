@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/list-keranjang', [KeranjangController::class, 'index'])->name('index.keranjang');
     Route::post('/list-keranjang', [KeranjangController::class, 'store'])->name('index.keranjang.store');
 
+    Route::get('/print-transaksi/{transaksi}', [TransaksiController::class, 'download'])->name('index.transaksi.download');
     Route::get('/list-transaksi/{transaksi}', [TransaksiController::class, 'show'])->name('index.transaksi.show');
     Route::get('/list-transaksi', [TransaksiController::class, 'index'])->name('index.transaksi');
     Route::post('/list-transaksi', [TransaksiController::class, 'store'])->name('index.transaksi.store');
@@ -49,7 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('kategori', ControllersKategoriController::class);
         Route::resource('jenis_ayam', JenisAyamController::class);
         // Route::resource('cover', gambarController::class);
-        Route::resource('transaksi', ControllersTransaksiController::class);
+        Route::resource('trans', ControllersTransaksiController::class);
         // Route::resource('info', beritaController::class);
         // Route::resource('kontak', dashboard_kontak::class);
         Route::resource('message', MessageController::class);

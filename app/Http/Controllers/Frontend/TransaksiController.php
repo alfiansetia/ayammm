@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ayam;
 use App\Models\DetailTransaksi;
+use App\Models\Kategori;
+use App\Models\Keranjang;
+use App\Models\Kontak;
 use App\Models\Message;
 use App\Models\Transaksi;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class TransaksiController extends Controller
@@ -62,5 +68,17 @@ class TransaksiController extends Controller
             'link'      => route('transaksi.show', $trx->id),
         ]);
         return redirect()->back()->with('message', 'Success Buat Pesanan !');
+    }
+
+    public function download(Transaksi $transaksi)
+    {
+        $kontak = Kontak::first();
+        $data = $transaksi->load('details', 'user');
+        $pdf = Pdf::loadview('laporan_pdf', [
+            'data' => $data,
+            'kontak' => $kontak,
+        ]);
+        $newName = 'trx_' . $transaksi->nomor . '.pdf';
+        return $pdf->download($newName);
     }
 }

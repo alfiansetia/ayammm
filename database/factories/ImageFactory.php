@@ -22,6 +22,9 @@ class ImageFactory extends Factory
         $files = File::allFiles($sourcePath);
         $fileToCopy = $files[rand(0, count($files) - 1)];
         $destinationPath = public_path('images');
+        if (!file_exists($destinationPath)) {
+            File::makeDirectory($destinationPath);
+        }
         $newFileName = Str::random(15) . '.jpg';
         File::copy($fileToCopy, $destinationPath . '/' . $newFileName);
         return [

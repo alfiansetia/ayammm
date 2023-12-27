@@ -33,53 +33,22 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
 
-        Session::flash('nama', $request->nama);
-        $request->validate(
-            [
-                'nama' => 'required',
-
-            ],
-            [
-                'nama.required' => 'Nama Wajib di isi',
-
-
-            ]
-        );
-        if ($request->hasFile("cover")) {
-            $file = $request->file("cover");
-            $imageName = time() . '_' . $file->getClientOriginalName();
-            $file->move(\public_path("cover/"), $imageName);
-
-            $transaksi = [
-                "nama" => $request->nama,
-
-                "alamat" => $request->alamat,
-                "no_telp" => $request->no_telp,
-                "status" => $request->status,
-                "h_jual" => $request->h_jual,
-                "kode_ayam" => $request->kode_ayam,
-                "cover" => $imageName,
-            ];
-        }
-
-        // masukan data
-        transaksi::create($transaksi);
-        return redirect('trans')->with('success', 'berhasil memasukan data');
+        // 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Transaksi $transaksi)
+    public function show(Transaksi $tran)
     {
-        $message = Message::where('link', route('transaksi.show', $transaksi->id))
+        $message = Message::where('link', route('trans.show', $tran->id))
             ->where('is_read', 'no')->first();
         if ($message) {
             $message->update([
                 'is_read' => 'yes',
             ]);
         }
-        return response()->json($transaksi->load('details'));
+        return response()->json($tran->load('details'));
     }
 
     /**

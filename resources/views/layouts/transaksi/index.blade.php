@@ -49,14 +49,19 @@
                                                         class="btn btn-outline-primary">Update</a></td>
 
                                                 <td class="">
-                                                    <a href="{{ url('/trans/' . $item->id . '/show') }}"
-                                                        class="btn btn-outline-info" data-toggle="tooltip"
-                                                        data-original-title="Edit user">
+                                                    <a href="{{ url('/trans/' . $item->id) }}" class="btn btn-outline-info"
+                                                        data-toggle="tooltip" data-original-title="Edit user">
                                                         <i class="fa fa-trash"> Detail</i>
                                                     </a>
                                                 </td>
-
-
+                                                <td class="">
+                                                    <a target="_blank"
+                                                        href="{{ route('index.transaksi.download', $item->id) }}"
+                                                        class="btn btn-outline-info" data-toggle="tooltip"
+                                                        data-original-title="Edit user">
+                                                        <i class="fa fa-trash"> Download</i>
+                                                    </a>
+                                                </td>
                                                 <td>
                                                     <form onsubmit=" return confirm('Yakin menghapus data')"
                                                         class="d-inline" action="{{ '/trans/' . $item->id }}"
